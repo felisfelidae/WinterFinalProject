@@ -3,7 +3,19 @@ package finalprojectwinter;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		GUI gui = new GUI();
+		gui.setVisible(true);
+		
+		int[] intArray = {4, 2};
+		
+		BubbleSort bubbleSort = new BubbleSort();
+		bubbleSort.bubbleSort(intArray);
+		
+		System.out.println("Total Operations: " + bubbleSort.returnBubbleSortOperations());
+		for (int i = 0; i < intArray.length; i++) {
+			System.out.print(intArray[i] + " ");
+		}
 
 	}
 

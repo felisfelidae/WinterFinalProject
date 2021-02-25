@@ -4,6 +4,11 @@ public class BubbleSort extends SortAlgorithms {
 
 	//Emma
 	
+	public BubbleSort(int length) {
+		//needs to be changed later
+		super(length);
+	}
+	
 	public int operationsCount = 0;
 		
 	public void bubbleSort(int [] numbers){

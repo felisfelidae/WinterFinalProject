@@ -1,8 +1,6 @@
 package finalprojectwinter;
 
 public class BubbleSort extends SortAlgorithms {
-	
-	//Emma
 
 	
 	public BubbleSort(int length) {

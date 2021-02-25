@@ -20,6 +20,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class GUI {
+
+	//Emma
+	
 	
 	private JFrame registrationFrame = new JFrame("Sorting Algorithm Comparison Machine 3000");
 

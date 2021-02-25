@@ -23,7 +23,6 @@ public class GUI {
 
 	//Emma
 	
-	
 	private JFrame registrationFrame = new JFrame("Sorting Algorithm Comparison Machine 3000");
 
 	public GUI() {

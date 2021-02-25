@@ -4,7 +4,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		//Emma
+		
 		GUI gui = new GUI();
+		//new Gui
 		gui.setVisible(true);
 		
 		int[] intArray = {4, 2};

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 public class GUI {
 
 	//Emma
+	//Emmachange
 	
 	private JFrame registrationFrame = new JFrame("Sorting Algorithm Comparison Machine 3000");
 

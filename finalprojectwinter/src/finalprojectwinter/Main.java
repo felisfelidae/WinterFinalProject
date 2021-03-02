@@ -8,7 +8,6 @@ public class Main {
 	static Scanner scnr = new Scanner(System.in);
 
 	public static void main(String[] args) {
-<<<<<<< HEAD
 		
 		GUI gui = new GUI();
 		//new Gui
@@ -16,14 +15,14 @@ public class Main {
 		
 		int[] intArray = {4, 2};
 		
-		BubbleSort bubbleSort = new BubbleSort();
+		BubbleSort bubbleSort = new BubbleSort(intArray.length);
 		bubbleSort.bubbleSort(intArray);
 		
 		System.out.println("Total Operations: " + bubbleSort.returnBubbleSortOperations());
 		for (int i = 0; i < intArray.length; i++) {
 			System.out.print(intArray[i] + " ");
 		}
-=======
+		
 		// TODO Auto-generated method stub
 		System.out.println("Enter length of array:");
 		int userLength = scnr.nextInt();
@@ -32,7 +31,6 @@ public class Main {
 		userLength -=1;
 		MergeSort.mergeParse(0, userLength);
 		System.out.println("Number of operations in merge sort: " + MergeSort.getMergeCount());
->>>>>>> refs/remotes/origin/main
 
 	}
 

@@ -13,7 +13,7 @@ public class Main {
 		//new Gui
 		gui.setVisible(true);
 		
-		int[] intArray = {4, 2};
+		int[] intArray = {4, 2, 1};
 		
 		BubbleSort bubbleSort = new BubbleSort(intArray.length);
 		bubbleSort.bubbleSort(intArray);

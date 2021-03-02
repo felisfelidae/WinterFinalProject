@@ -59,7 +59,7 @@ public class GUI {
         histogramPanel.add(histogramLabel, histogramLayoutConstraints);
         
         HistogramMaterials histogramVisuals = new HistogramMaterials();
-        histogramPanel.add(histogramVisuals);
+        histogramPanel.add(histogramVisuals, histogramLayoutConstraints);
         
 	    
 	    //Title for line graph panel

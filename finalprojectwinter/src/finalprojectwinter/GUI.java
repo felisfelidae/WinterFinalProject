@@ -29,6 +29,7 @@ public class GUI {
 
 	public GUI() {
 		
+		
 	    JPanel mainPanel = new JPanel();
 	    //Pete's Panel:
 	    JPanel userInputPanel = new JPanel();
@@ -57,11 +58,8 @@ public class GUI {
         
         histogramPanel.add(histogramLabel, histogramLayoutConstraints);
         
-        //histogram contents
-        Rectangle bubbleSort = new Rectangle();
-        Color bubbleColor = new Color(128, 128, 0);
-        Graphics2D.setColor(bubbleColor);
-        Graphics2D.fill(bubbleSort);
+        HistogramMaterials histogramVisuals = new HistogramMaterials();
+        histogramPanel.add(histogramVisuals);
         
 	    
 	    //Title for line graph panel

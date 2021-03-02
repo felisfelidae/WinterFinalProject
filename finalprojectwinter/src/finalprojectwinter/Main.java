@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Main {
 	
-	///badmain
 	static Scanner scnr = new Scanner(System.in);
 
 	public static void main(String[] args) {

@@ -2,6 +2,7 @@ package finalprojectwinter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -59,8 +60,8 @@ public class GUI {
         //histogram contents
         Rectangle bubbleSort = new Rectangle();
         Color bubbleColor = new Color(128, 128, 0);
-        graphicsObj.setColor(binColor1);
-        graphicsObj.fill(binRectangle1);
+        Graphics2D.setColor(bubbleColor);
+        Graphics2D.fill(bubbleSort);
         
 	    
 	    //Title for line graph panel

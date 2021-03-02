@@ -1,7 +1,7 @@
 package finalprojectwinter;
 
 public class MergeSort extends SortAlgorithms{
-	//avery
+	//AVERY
 	
 	MergeSort(int length) {
 		super(length);

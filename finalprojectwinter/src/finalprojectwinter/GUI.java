@@ -46,7 +46,21 @@ public class GUI {
 
         //I changed the layout from a box layout to a border layout, because box layouts only stack
 	    mainPanel.setLayout(new BorderLayout());
+	    
+	    //histogram title
+        JLabel histogramLabel = new JLabel("Number of Operations in Sort");
+        histogramLayoutConstraints.insets = new Insets(5, 5, 5, 15);
+        histogramLayoutConstraints.anchor = GridBagConstraints.EAST;
+        histogramLayoutConstraints.gridx = 0;
+        histogramLayoutConstraints.gridy = 0;
         
+        histogramPanel.add(histogramLabel, histogramLayoutConstraints);
+        
+        //histogram contents
+        Rectangle bubbleSort = new Rectangle();
+        Color bubbleColor = new Color(128, 128, 0);
+        graphicsObj.setColor(binColor1);
+        graphicsObj.fill(binRectangle1);
         
 	    
 	    //Title for line graph panel

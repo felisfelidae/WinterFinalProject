@@ -9,6 +9,10 @@ public class SortAlgorithms {
 	protected static int[] sortArray;
 	Random randomNum = new Random();
 	
+	SortAlgorithms(){
+		
+	}
+	
 	SortAlgorithms(int length) {
 		createSortArray(length);
 		fillSortArray(length);

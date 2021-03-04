@@ -38,6 +38,7 @@ public class GUI {
 	    
 	    //Avery's Panel:
 	    JPanel histogramPanel = new JPanel();
+	    
 	    GridBagConstraints histogramLayoutConstraints = new GridBagConstraints();
 	    histogramPanel.setBackground(Color.GREEN);
 	    
@@ -48,18 +49,10 @@ public class GUI {
 
         //I changed the layout from a box layout to a border layout, because box layouts only stack
 	    mainPanel.setLayout(new BorderLayout());
-	    
-	    //histogram title
-        JLabel histogramLabel = new JLabel("Number of Operations in Sort");
-        histogramLayoutConstraints.insets = new Insets(5, 5, 5, 15);
-        histogramLayoutConstraints.anchor = GridBagConstraints.EAST;
-        histogramLayoutConstraints.gridx = 0;
-        histogramLayoutConstraints.gridy = 0;
         
-        histogramPanel.add(histogramLabel, histogramLayoutConstraints);
-        
-        HistogramMaterials histogramVisuals = new HistogramMaterials();
-        histogramPanel.add(histogramVisuals, histogramLayoutConstraints);
+        //shows the histogram  
+	    Histogram hist = new Histogram(); 
+        histogramPanel.add(hist, histogramLayoutConstraints);
         
 	    
 	    //Title for line graph panel
@@ -73,9 +66,9 @@ public class GUI {
 
         
         //Border layouts use North, East, Center, West, and South
-        mainPanel.add(userInputPanel, BorderLayout.NORTH);
-        mainPanel.add(histogramPanel, BorderLayout.EAST);
-        mainPanel.add(lineGraphPanel, BorderLayout.WEST);
+        mainPanel.add(userInputPanel/*, BorderLayout.NORTH*/);
+        mainPanel.add(histogramPanel/*, BorderLayout.EAST*/);
+        mainPanel.add(lineGraphPanel/*, BorderLayout.WEST*/);
         registrationFrame.add(mainPanel);
         
         

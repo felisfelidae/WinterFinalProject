@@ -15,6 +15,7 @@ public class HistogramMaterials extends JComponent {
 
 	@Override
 	   public void paintComponent(Graphics g) {  
+		
 	      // Cast to Graphics2D
 	      Graphics2D graphicsObj = (Graphics2D) g;
 	      

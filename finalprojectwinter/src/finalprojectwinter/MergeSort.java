@@ -10,7 +10,8 @@ public class MergeSort extends SortAlgorithms{
 	public static void mergeParse(int left, int right) {
 		//backs out of the recursion if you've gotten down to a single number so the previous iteration will move on to the next sort or merge
 		if (left >= right) {
-			countOperations += 1;
+			countOperations += 2;
+			//one count for the left/right comparison, one for the return
 			return;
 		}
 		
@@ -19,10 +20,13 @@ public class MergeSort extends SortAlgorithms{
 		countOperations += 1;
 		//recursively calls the mergeParse on the left until it hits the return statement condition
 		mergeParse(left, med);
+		countOperations +=1;
 		//recursively calls the mergeParse the right of center until it hits the return statement condition
 		mergeParse(med + 1, right);
+		countOperations +=1;
 		//actually sorts the two fractions of the array that form the left and right boundaries for whichever fraction of the array
 		mergeSort(left, med, right);
+		countOperations +=1;
 	}
 	
 	/*function to sort the fractional array pieces defined in mergeParse (no new arrays were actually created, but rather boundaries for sections
@@ -47,7 +51,7 @@ public class MergeSort extends SortAlgorithms{
 		for (int i=0; i < size2; ++i) {
 			countOperations += 2;
 			temp2[i] = sortArray[middle + 1 + i];
-			countOperations += 1;
+			countOperations += 2;
 		}
 		
 		int i = 0;
@@ -60,7 +64,7 @@ public class MergeSort extends SortAlgorithms{
 			countOperations += 2;
 			//assigns i to k if temp1[i] is less than or equal to temp2[j], then increments i
 			if (temp1[i] <= temp2[j]) {
-				countOperations +=2;
+				countOperations +=1;
 				sortArray[k] = temp1[i];
 				++i;
 				countOperations += 2;

@@ -1,12 +1,7 @@
 package finalprojectwinter;
 
 public class MergeSort extends SortAlgorithms{
-	//avery
-	
-	MergeSort(int length) {
-		super(length);
-		// TODO Auto-generated constructor stub
-	}
+	//AVERY	
 
 	private static int countOperations = 0;
 	

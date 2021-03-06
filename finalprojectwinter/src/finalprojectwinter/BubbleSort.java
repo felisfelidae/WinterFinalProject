@@ -1,16 +1,11 @@
 package finalprojectwinter;
 
 public class BubbleSort extends SortAlgorithms {
-
-	
-	public BubbleSort(int length) {
-		//needs to be changed later
-		super(length);
-	}
+	//EMMA
 	
 	public int operationsCount = 0;
 		
-	public void bubbleSort(int [] numbers){
+	public void bubbleSort(int[] numbers){
 
 		operationsCount++; //initializing i
 			

@@ -4,10 +4,13 @@ package finalprojectwinter;
 import java.util.Random;
 
 public class SortAlgorithms {
-	//avery
 	
 	protected static int[] sortArray;
 	Random randomNum = new Random();
+	
+	SortAlgorithms(){
+		
+	}
 	
 	SortAlgorithms(int length) {
 		createSortArray(length);

@@ -11,21 +11,19 @@ import javax.swing.UIManager;
 import javax.swing.SwingUtilities;
 
 public class Histogram extends JPanel {
-	public Histogram() {
+	public Histogram(int mergeOps, int bubbleOps, int quickOps) {
 		super(new GridLayout(3,2));  //3 rows, 1 column
 		JLabel histLabel1, histLabel2, histLabel3;
 		
 		HistogramMaterials histogramVisuals = new HistogramMaterials();
+		histogramVisuals.setSorts(mergeOps, bubbleOps, quickOps);
 		
-		histLabel1 = new JLabel("Number of Operations in Sort");
-		histLabel2 = new JLabel("Number of Operations", JLabel.CENTER);
-		histLabel2.setVerticalTextPosition(JLabel.BOTTOM);
-		histogramVisuals.setPreferredSize(getSize());
+		histLabel1 = new JLabel("Number of Operations by Type of Sort");
+		
 		
 		
 		add(histLabel1);
 		add(histogramVisuals);
-		add(histLabel2);
 		
 		
 	}

@@ -1,37 +1,38 @@
 package finalprojectwinter;
 
-public class MergeSort extends SortAlgorithms{
+public class MergeSort {
 	//AVERY	
 
 	private static int countOperations = 0;
 	
 	/*recursive method which splits the array in half until it has only single unit sized fractions, and then calls mergeSort to zip those units
 	back together*/
-	public static void mergeParse(int left, int right) {
+	public void mergeParse(int left, int right, int[] sortArray) {
 		//backs out of the recursion if you've gotten down to a single number so the previous iteration will move on to the next sort or merge
+		countOperations +=1;
 		if (left >= right) {
-			countOperations += 2;
+			countOperations += 1;
 			//one count for the left/right comparison, one for the return
 			return;
 		}
 		
 		//creates a halfway point between the two ends of the array so that the mergeParse can be recursively called with one half each
 		int med = (left + right - 1)/2;
-		countOperations += 1;
+		countOperations += 3;
 		//recursively calls the mergeParse on the left until it hits the return statement condition
-		mergeParse(left, med);
 		countOperations +=1;
+		mergeParse(left, med, sortArray);
 		//recursively calls the mergeParse the right of center until it hits the return statement condition
-		mergeParse(med + 1, right);
 		countOperations +=1;
+		mergeParse(med + 1, right, sortArray);
 		//actually sorts the two fractions of the array that form the left and right boundaries for whichever fraction of the array
-		mergeSort(left, med, right);
 		countOperations +=1;
+		mergeSort(left, med, right, sortArray);
 	}
 	
 	/*function to sort the fractional array pieces defined in mergeParse (no new arrays were actually created, but rather boundaries for sections
 	of the array were defined by integer limits) from smallest number to highest)*/
-	public static void mergeSort(int left, int middle, int right) {
+	public static void mergeSort(int left, int middle, int right, int[] sortArray) {
 		//sets the size of the temporary arrays to hold the ordered values of arr[]
 		int size1 = middle - left + 1;
 		countOperations += 1;
@@ -98,7 +99,7 @@ public class MergeSort extends SortAlgorithms{
 		}
 	}
 	
-	public static int getMergeCount() {
+	public int getMergeCount() {
 		return countOperations;
 	}
 

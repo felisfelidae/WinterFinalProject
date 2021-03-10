@@ -35,5 +35,4 @@ public class LineGraph extends Panel{
 		
 	}
 	
-
 }

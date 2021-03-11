@@ -2,6 +2,7 @@ package finalprojectwinter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,21 +12,31 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-
+import java.util.Scanner;
+import javax.swing.JFileChooser;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class GUI {
 	ArrayList<SortAlgorithms> sortTracker = new ArrayList<SortAlgorithms>();
+	private SortAlgorithms dummyAlgorithm = new SortAlgorithms();
 	private JTextField userInput = new JTextField(10);
 	private String userInputString;
 	private int userInputResult;
+	private JFileChooser fileChooser;
 
 	//The title is a work in progress
 	public static JFrame frame = new JFrame("The Mondrian Monstrosity");
@@ -50,7 +61,8 @@ public class GUI {
 	
 	public GUI() {
 
-		
+		sortTracker.add(dummyAlgorithm);
+		fileChooser = new JFileChooser();
 		//Notes: weight x and y determine how the panels
 		
 		BasePanel.setLayout(BasePanelLayout);
@@ -70,7 +82,9 @@ public class GUI {
 		baseConstraints.fill = GridBagConstraints.BOTH; //resizes panels horizontally and vertically
 		
 		//Panel class constructor adds panel to BasePanel, BasePanelLayout, etc. when instantiated
-		Panel userInputPanel = new Panel();
+		
+		panelMethod();
+		/*Panel userInputPanel = new Panel();
 		userInputPanel.setBackground(Color.YELLOW);
 		
 		JLabel inputLabel = new JLabel();
@@ -84,14 +98,14 @@ public class GUI {
 						userInputResult = Integer.parseInt(userInputString);
 						SortAlgorithms newSort = new SortAlgorithms(userInputResult);
 						sortTracker.add(newSort);
-						
+						System.out.print("blarg");
 		        	}
 				}
 		);
 		
+		userInputPanel.add(inputLabel);
 		userInputPanel.add(userInput);
 		userInputPanel.add(yesToNumber);
-		userInputPanel.add(inputLabel);
 
 		baseConstraints.gridx = 0;
 		baseConstraints.gridy = 1;
@@ -112,11 +126,10 @@ public class GUI {
 		baseConstraints.gridwidth = 1;
 		baseConstraints.gridwidth = GridBagConstraints.RELATIVE;
 
-
 		Panel histogramPanel = new Panel();
-		//Histogram nDisplay = new Histogram(thisSort.get(0).getMergeOps(), thisSort.get(0).getBubbleOps(), thisSort.get(0).getQuickOps());
-		//nDisplay.setPreferredSize(histSize);
-		//histogramPanel.add(nDisplay);
+		Histogram nDisplay = new Histogram(sortTracker.get(0).getMergeOps(), sortTracker.get(0).getBubbleOps(), sortTracker.get(0).getQuickOps());
+		nDisplay.setPreferredSize(histSize);
+		histogramPanel.add(nDisplay);
 
 		
 		baseConstraints.gridx = 0;
@@ -128,8 +141,7 @@ public class GUI {
 		
 		setPanelDimensions(0.0, 0.0);
 		Panel savePanel = new Panel();
-		savePanel.setBackground(Color.RED);
-		
+		savePanel.setBackground(Color.RED);*/
 
 			
 		//BasePanel added after other panels instances have been created (which are added to
@@ -176,6 +188,185 @@ public class GUI {
 		
 		int pixelHeight = (int) (frameHeight * heightFramePortion);
 		baseConstraints.ipady = pixelHeight / 2;
+	}
+	
+	/*public void buttonMethod() {
+		Panel userInputPanel = new Panel();
+		userInputPanel.setBackground(Color.YELLOW);
+		
+		JLabel inputLabel = new JLabel();
+		inputLabel.setText("INSERT ARRAY SIZE:");
+		JButton yesToNumber = new JButton("Apply");
+		yesToNumber.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						userInputString = userInput.getText();
+						userInputResult = Integer.parseInt(userInputString);
+						SortAlgorithms newSort = new SortAlgorithms(userInputResult);
+						sortTracker.add(newSort);
+
+						
+		        	}
+				}
+		);
+		
+		userInputPanel.add(userInput);
+		userInputPanel.add(yesToNumber);
+		userInputPanel.add(inputLabel);
+
+		baseConstraints.gridx = 0;
+		baseConstraints.gridy = 1;
+		
+		baseConstraints.gridheight = 1;
+		baseConstraints.gridwidth = 1;
+	}*/
+	
+	/*public void histogramMethod(boolean refresh) {
+		Panel histogramPanel = new Panel();
+		if (refresh == true) {
+		Histogram nDisplay = new Histogram(sortTracker.get(0).getMergeOps(), sortTracker.get(0).getBubbleOps(), sortTracker.get(0).getQuickOps());
+		nDisplay.setPreferredSize(histSize);
+		histogramPanel.add(nDisplay);
+
+		
+		baseConstraints.gridx = 0;
+		baseConstraints.gridy = 2;
+		
+		baseConstraints.gridheight = 1;
+		baseConstraints.gridwidth = 3;
+		}
+		
+		else {
+			frame.getContentPane().remove(histogramPanel);
+			int last = sortTracker.size() - 1;
+			Histogram xDisplay = new Histogram(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
+					sortTracker.get(last).getQuickOps());
+			int dumbint = sortTracker.get(last).getMergeOps();
+			System.out.println(dumbint);
+			xDisplay.setPreferredSize(histSize);
+			histogramPanel.add(xDisplay);
+			frame.getContentPane().add(histogramPanel);
+			frame.validate();
+			
+
+			
+			baseConstraints.gridx = 0;
+			baseConstraints.gridy = 2;
+			
+			baseConstraints.gridheight = 1;
+			baseConstraints.gridwidth = 3;
+		}
+			
+		
+	}*/
+	
+	public void panelMethod() {
+		Panel userInputPanel = new Panel();
+		userInputPanel.setBackground(Color.YELLOW);
+		
+		JLabel inputLabel = new JLabel();
+		inputLabel.setText("INSERT ARRAY SIZE:");
+		JButton yesToNumber = new JButton("Apply");
+		yesToNumber.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						userInputString = userInput.getText();
+						userInput.setText(null);
+						userInputResult = Integer.parseInt(userInputString);
+						SortAlgorithms newSort = new SortAlgorithms(userInputResult);
+						sortTracker.add(newSort);
+						frame.getContentPane().removeAll();
+						panelMethod();
+						frame.add(BasePanel);
+						frame.validate();
+		        	}
+				}
+		);
+		
+		userInputPanel.add(inputLabel);
+		userInputPanel.add(userInput);
+		userInputPanel.add(yesToNumber);
+
+		baseConstraints.gridx = 0;
+		baseConstraints.gridy = 1;
+		
+		baseConstraints.gridheight = 1;
+		baseConstraints.gridwidth = 1;
+
+		
+		setPanelDimensions(0.5, 1.0);
+		LineGraph lineGraphPanel = new LineGraph();
+		lineGraphPanel.setBackground(Color.BLUE);
+	
+		
+		baseConstraints.gridx = 1;
+		baseConstraints.gridy = 1;
+		
+		baseConstraints.gridheight = 1;
+		baseConstraints.gridwidth = 1;
+		baseConstraints.gridwidth = GridBagConstraints.RELATIVE;
+
+		Panel histogramPanel = new Panel();
+		Histogram nDisplay = new Histogram(sortTracker.get(0).getMergeOps(), sortTracker.get(0).getBubbleOps(), sortTracker.get(0).getQuickOps());
+		nDisplay.setPreferredSize(histSize);
+		histogramPanel.add(nDisplay);
+
+		
+		baseConstraints.gridx = 0;
+		baseConstraints.gridy = 2;
+		
+		baseConstraints.gridheight = 1;
+		baseConstraints.gridwidth = 3;
+
+		
+		setPanelDimensions(0.0, 0.0);
+		Panel savePanel = new Panel();
+		savePanel.setBackground(Color.RED);
+		
+		JButton saveArrays = new JButton("Save");
+		saveArrays.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						try {
+							saveFile();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		        	}
+				}
+		);
+		JButton loadArrays = new JButton("Load");
+		saveArrays.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						
+		        	}
+				}
+		);
+		savePanel.add(saveArrays);
+		savePanel.add(loadArrays);
+		
+	}
+	
+
+	public void saveFile() throws FileNotFoundException
+	{
+		// File writing objects
+		PrintWriter outputFile = new PrintWriter ("SortFile.txt");
+		
+		for (int i = 0; i < sortTracker.size(); ++i) {
+			outputFile.println(sortTracker.get(i).sortArray);
+			outputFile.println(sortTracker.get(i).getMergeOps());
+			outputFile.println(sortTracker.get(i).getBubbleOps());
+			outputFile.println(sortTracker.get(i).getQuickOps());
+		}
+		
+		outputFile.close();
 	}
 
 }

@@ -100,7 +100,10 @@ public class MergeSort {
 	}
 	
 	public int getMergeCount() {
-		return countOperations;
+		int returnInt = countOperations;
+		countOperations = 0;
+		return returnInt;
+		
 	}
 
 }

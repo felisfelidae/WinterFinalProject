@@ -14,9 +14,9 @@ public class HistogramMaterials extends JComponent {
 	private static final long serialVersionUID = 1L;
 	
 	public void setSorts(int mergeOps, int bubbleOps, int quickOps) {
-		this.mergeOps = mergeOps;
-		this.bubbleOps = bubbleOps;
-		this.quickOps = quickOps;
+		this.mergeOps = (int) Math.ceil(mergeOps)/10;
+		this.bubbleOps =(int) Math.ceil(bubbleOps)/10;
+		this.quickOps = (int) Math.ceil(quickOps)/10;
 	}
 
 	@Override

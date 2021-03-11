@@ -50,7 +50,9 @@ public class BubbleSort {
 		//"get" mehtod for operationsCount
 	
 		public int returnBubbleSortOperations() {
-			return operationsCount;
+			int returnInt = operationsCount;
+			operationsCount = 0;
+			return returnInt;
 		}
 
 	}

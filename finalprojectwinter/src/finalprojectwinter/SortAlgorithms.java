@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class SortAlgorithms {
 	
-	protected static int[] sortArray;
+	protected int[] sortArray;
 	private static int mergeOps = 1;
 	private static int bubbleOps = 1;
 	private static int quickOps = 1;

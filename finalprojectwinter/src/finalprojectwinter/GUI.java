@@ -31,7 +31,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class GUI {
-	//teamwork
+	//teamwork 
 	ArrayList<SortAlgorithms> sortTracker = new ArrayList<SortAlgorithms>();
 	private SortAlgorithms dummyAlgorithm = new SortAlgorithms();
 	private JTextField userInput = new JTextField(10);

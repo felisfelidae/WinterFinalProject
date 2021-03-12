@@ -1,7 +1,7 @@
 package finalprojectwinter;
 
 public class SelectionSort {
-	//EOL
+	//EOL 
 	
 	int operationsCount = 0;
 	

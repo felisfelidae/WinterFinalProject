@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Histogram extends JPanel {
-	/**
+	/** 
 	 * AMM
 	 */
 	private static final long serialVersionUID = 1L;

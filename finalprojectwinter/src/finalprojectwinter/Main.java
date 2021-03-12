@@ -6,7 +6,7 @@ public class Main {
 			
 
 		GUI gui = new GUI();
-		//new Gui
+		//new Gui 
 
 	}
 

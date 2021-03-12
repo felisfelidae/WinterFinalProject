@@ -4,7 +4,7 @@ package finalprojectwinter;
 import java.util.Random;
 
 public class SortAlgorithms {
-	//AMM
+	//AMM 
 	
 	protected int[] sortArray;
 	private static int mergeOps = 1;

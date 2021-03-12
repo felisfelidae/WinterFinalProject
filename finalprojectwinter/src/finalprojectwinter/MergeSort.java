@@ -1,7 +1,7 @@
 package finalprojectwinter;
 
 public class MergeSort {
-	//AVERY	
+	//AMM
 
 	private static int countOperations = 0;
 	

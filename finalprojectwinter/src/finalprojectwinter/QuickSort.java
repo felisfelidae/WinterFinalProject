@@ -2,6 +2,7 @@ package finalprojectwinter;
 
 
 public class QuickSort {
+	//EOL
 	
 	int operationsCount = 0;
 	

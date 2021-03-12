@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 public class Histogram extends JPanel {
 	/** 
-	 * AMM
+	 * AMM 
 	 */
 	private static final long serialVersionUID = 1L;
 	private int mergeOps, bubbleOps, quickOps, selecOps;

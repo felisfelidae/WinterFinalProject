@@ -61,6 +61,7 @@ public class GUI {
 	
 	public GUI() {
 
+		//DO NOT MESS WITH DUMMY ALGORITHM. it exists so the program doesn't break even before the user input is entered
 		sortTracker.add(dummyAlgorithm);
 		fileChooser = new JFileChooser();
 		//Notes: weight x and y determine how the panels
@@ -83,29 +84,15 @@ public class GUI {
 		
 		//Panel class constructor adds panel to BasePanel, BasePanelLayout, etc. when instantiated
 		
-		panelMethod();
-		/*Panel userInputPanel = new Panel();
+		Panel userInputPanel = new Panel();
 		userInputPanel.setBackground(Color.YELLOW);
 		
 		JLabel inputLabel = new JLabel();
 		inputLabel.setText("INSERT ARRAY SIZE:");
-		JButton yesToNumber = new JButton("Apply");
-		yesToNumber.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e)
-		        	{
-						userInputString = userInput.getText();
-						userInputResult = Integer.parseInt(userInputString);
-						SortAlgorithms newSort = new SortAlgorithms(userInputResult);
-						sortTracker.add(newSort);
-						System.out.print("blarg");
-		        	}
-				}
-		);
+		JLabel feedBack = new JLabel();
 		
 		userInputPanel.add(inputLabel);
 		userInputPanel.add(userInput);
-		userInputPanel.add(yesToNumber);
 
 		baseConstraints.gridx = 0;
 		baseConstraints.gridy = 1;
@@ -126,8 +113,11 @@ public class GUI {
 		baseConstraints.gridwidth = 1;
 		baseConstraints.gridwidth = GridBagConstraints.RELATIVE;
 
+		//creates new panel and adds a new Histogram object with the most recent sort information
 		Panel histogramPanel = new Panel();
-		Histogram nDisplay = new Histogram(sortTracker.get(0).getMergeOps(), sortTracker.get(0).getBubbleOps(), sortTracker.get(0).getQuickOps());
+		int last = sortTracker.size() - 1;
+		Histogram nDisplay = new Histogram(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
+				sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), 0);
 		nDisplay.setPreferredSize(histSize);
 		histogramPanel.add(nDisplay);
 
@@ -141,7 +131,71 @@ public class GUI {
 		
 		setPanelDimensions(0.0, 0.0);
 		Panel savePanel = new Panel();
-		savePanel.setBackground(Color.RED);*/
+		savePanel.setBackground(Color.RED);
+		
+		//save button w/action listener
+		JButton saveArrays = new JButton("Save");
+		saveArrays.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						try {
+							saveFile();
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		        	}
+				}
+		);
+		
+		//FINISH
+		JButton loadArrays = new JButton("Load");
+		saveArrays.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						
+		        	}
+				}
+		);
+		
+		/*button to apply array length with action listener. Gets user input, converts to int, checks that user input is within parameters
+		 * 1 to 10000, then refreshes the histogram display accordingly and adds the new array to the SortAlgorithms ArrayList so that 
+		 * it can be saved and looked at later*/
+		JButton yesToNumber = new JButton("Apply");
+		yesToNumber.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e)
+		        	{
+						userInputString = userInput.getText();
+						userInput.setText(null);
+						userInputResult = Integer.parseInt(userInputString);
+						if (userInputResult > 10000) {
+							feedBack.setText("How much processing power do you think we have around here?");
+						}
+						else if (userInputResult < 1) {
+							feedBack.setText("Hey! What kind of array do you think that is!?");
+						}
+						else {
+							feedBack.setText(null);
+							SortAlgorithms newSort = new SortAlgorithms(userInputResult);
+							sortTracker.add(newSort);
+							nDisplay.resetSorts(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
+					sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), userInputResult);
+							histogramPanel.validate();
+							histogramPanel.repaint();
+						}
+		        	}
+				}
+		);
+		
+		//adding number button and feedback last so they position appropriately/'hear' their components
+		userInputPanel.add(yesToNumber);
+		userInputPanel.add(feedBack);
+		//add savepanel stuff at the bottom
+		savePanel.add(saveArrays);
+		savePanel.add(loadArrays);
 
 			
 		//BasePanel added after other panels instances have been created (which are added to
@@ -156,6 +210,8 @@ public class GUI {
 		
 		
 		//Window will appear in monitor center
+		//SUPER IMPORTANT TO EXIT ON CLOSE. that's why i was having memory issues
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
@@ -190,170 +246,7 @@ public class GUI {
 		baseConstraints.ipady = pixelHeight / 2;
 	}
 	
-	/*public void buttonMethod() {
-		Panel userInputPanel = new Panel();
-		userInputPanel.setBackground(Color.YELLOW);
-		
-		JLabel inputLabel = new JLabel();
-		inputLabel.setText("INSERT ARRAY SIZE:");
-		JButton yesToNumber = new JButton("Apply");
-		yesToNumber.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e)
-		        	{
-						userInputString = userInput.getText();
-						userInputResult = Integer.parseInt(userInputString);
-						SortAlgorithms newSort = new SortAlgorithms(userInputResult);
-						sortTracker.add(newSort);
-
-						
-		        	}
-				}
-		);
-		
-		userInputPanel.add(userInput);
-		userInputPanel.add(yesToNumber);
-		userInputPanel.add(inputLabel);
-
-		baseConstraints.gridx = 0;
-		baseConstraints.gridy = 1;
-		
-		baseConstraints.gridheight = 1;
-		baseConstraints.gridwidth = 1;
-	}*/
-	
-	/*public void histogramMethod(boolean refresh) {
-		Panel histogramPanel = new Panel();
-		if (refresh == true) {
-		Histogram nDisplay = new Histogram(sortTracker.get(0).getMergeOps(), sortTracker.get(0).getBubbleOps(), sortTracker.get(0).getQuickOps());
-		nDisplay.setPreferredSize(histSize);
-		histogramPanel.add(nDisplay);
-
-		
-		baseConstraints.gridx = 0;
-		baseConstraints.gridy = 2;
-		
-		baseConstraints.gridheight = 1;
-		baseConstraints.gridwidth = 3;
-		}
-		
-		else {
-			frame.getContentPane().remove(histogramPanel);
-			int last = sortTracker.size() - 1;
-			Histogram xDisplay = new Histogram(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
-					sortTracker.get(last).getQuickOps());
-			int dumbint = sortTracker.get(last).getMergeOps();
-			System.out.println(dumbint);
-			xDisplay.setPreferredSize(histSize);
-			histogramPanel.add(xDisplay);
-			frame.getContentPane().add(histogramPanel);
-			frame.validate();
-			
-
-			
-			baseConstraints.gridx = 0;
-			baseConstraints.gridy = 2;
-			
-			baseConstraints.gridheight = 1;
-			baseConstraints.gridwidth = 3;
-		}
-			
-		
-	}*/
-	
-	public void panelMethod() {
-		Panel userInputPanel = new Panel();
-		userInputPanel.setBackground(Color.YELLOW);
-		
-		JLabel inputLabel = new JLabel();
-		inputLabel.setText("INSERT ARRAY SIZE:");
-		JButton yesToNumber = new JButton("Apply");
-		yesToNumber.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e)
-		        	{
-						userInputString = userInput.getText();
-						userInput.setText(null);
-						userInputResult = Integer.parseInt(userInputString);
-						SortAlgorithms newSort = new SortAlgorithms(userInputResult);
-						sortTracker.add(newSort);
-						frame.getContentPane().removeAll();
-						panelMethod();
-						frame.add(BasePanel);
-						frame.validate();
-		        	}
-				}
-		);
-		
-		userInputPanel.add(inputLabel);
-		userInputPanel.add(userInput);
-		userInputPanel.add(yesToNumber);
-
-		baseConstraints.gridx = 0;
-		baseConstraints.gridy = 1;
-		
-		baseConstraints.gridheight = 1;
-		baseConstraints.gridwidth = 1;
-
-		
-		setPanelDimensions(0.5, 1.0);
-		LineGraph lineGraphPanel = new LineGraph();
-		lineGraphPanel.setBackground(Color.BLUE);
-	
-		
-		baseConstraints.gridx = 1;
-		baseConstraints.gridy = 1;
-		
-		baseConstraints.gridheight = 1;
-		baseConstraints.gridwidth = 1;
-		baseConstraints.gridwidth = GridBagConstraints.RELATIVE;
-
-		Panel histogramPanel = new Panel();
-		Histogram nDisplay = new Histogram(sortTracker.get(0).getMergeOps(), sortTracker.get(0).getBubbleOps(), sortTracker.get(0).getQuickOps());
-		nDisplay.setPreferredSize(histSize);
-		histogramPanel.add(nDisplay);
-
-		
-		baseConstraints.gridx = 0;
-		baseConstraints.gridy = 2;
-		
-		baseConstraints.gridheight = 1;
-		baseConstraints.gridwidth = 3;
-
-		
-		setPanelDimensions(0.0, 0.0);
-		Panel savePanel = new Panel();
-		savePanel.setBackground(Color.RED);
-		
-		JButton saveArrays = new JButton("Save");
-		saveArrays.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e)
-		        	{
-						try {
-							saveFile();
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-		        	}
-				}
-		);
-		JButton loadArrays = new JButton("Load");
-		saveArrays.addActionListener(
-				new ActionListener() {
-					public void actionPerformed(ActionEvent e)
-		        	{
-						
-		        	}
-				}
-		);
-		savePanel.add(saveArrays);
-		savePanel.add(loadArrays);
-		
-	}
-	
-
+//writes everything to a file so you can look at it later
 	public void saveFile() throws FileNotFoundException
 	{
 		// File writing objects

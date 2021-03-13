@@ -35,7 +35,7 @@ public class LineGraph extends Panel{
 	
 	//fields for plotting big o graphs
 	
-	//this should be replaced with whatever the user input result is
+	//this should be changed not sure if we're doing 1k or 10k
 	int tempMaxArrayInputSize = 100;
 	int plotPointFrequency = (int) (tempMaxArrayInputSize * 0.1);
 	int coordinatesArraySize;
@@ -78,7 +78,7 @@ public class LineGraph extends Panel{
 		g2d.setColor(new Color(255, 234, 186));
 		g2d.fillRect(graphRectXCoord, graphRectYCoord, graphRectSide, graphRectSide);
 		
-		g2d.setColor(new Color(93, 201, 154));
+		g2d.setColor(new Color(92, 201, 154));
 		g2d.setStroke(new BasicStroke(2));
 		
 		create_BigO_of_nSquared_Coordinates(tempMaxArrayInputSize);

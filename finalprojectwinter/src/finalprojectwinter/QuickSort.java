@@ -1,7 +1,8 @@
 package finalprojectwinter;
 
+import java.io.Serializable;
 
-public class QuickSort {
+public class QuickSort implements Serializable{
 	//EOL 
 	
 	int operationsCount = 0;
@@ -111,5 +112,4 @@ public class QuickSort {
 				return returnInt;
 			}
 
-		}
 }

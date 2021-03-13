@@ -12,11 +12,12 @@ public class Histogram extends JPanel {
 	 * AMM 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int mergeOps, bubbleOps, quickOps, selecOps;
+	private int mergeOps, bubbleOps, quickOps, selecOps, N;
 	private String scale = "0";
 	
 	public Histogram(int mergeOps, int bubbleOps, int quickOps, int selecOps, int N) {
 		JLabel histLabel1;
+		this.N = N;
 		resetSorts(mergeOps, bubbleOps, quickOps, selecOps, N);
 		
 		histLabel1 = new JLabel("Number of Operations by Type of Sort");
@@ -91,6 +92,7 @@ public class Histogram extends JPanel {
 	      graphicsObj.drawString("0", 8, 217);
 	      graphicsObj.drawString("Number of operations per sort have been scaled by", 8, 235);
 	      graphicsObj.drawString("powers of 10 as they exceed current threshholds.", 8, 250);
+	      graphicsObj.drawString("Array Size: " + N, 100, 280);
 	      
 	      /*switch case adjusting the scale displayed on the x axis*/
 	      switch(scale) {
@@ -149,6 +151,10 @@ public class Histogram extends JPanel {
 	      graphicsObj.fill(selecSort);
 	      graphicsObj.fill(babySelec);
 	      
+	}
+	
+	public void setN(int N) {
+		this.N = N;
 	}
 
 }

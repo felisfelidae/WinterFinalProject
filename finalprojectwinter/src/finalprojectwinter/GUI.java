@@ -1,5 +1,6 @@
 package finalprojectwinter;
 
+import java.io.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -12,11 +13,6 @@ import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
@@ -37,7 +33,7 @@ public class GUI {
 	private JTextField userInput = new JTextField(10);
 	private String userInputString;
 	private int userInputResult;
-	private JFileChooser fileChooser;
+	final private JFileChooser fileChooser = new JFileChooser();
 
 	//The title is a work in progress
 	public static JFrame frame = new JFrame("The Mondrian Monstrosity");
@@ -64,11 +60,11 @@ public class GUI {
 
 		//DO NOT MESS WITH DUMMY ALGORITHM. it exists so the program doesn't break even before the user input is entered
 		sortTracker.add(dummyAlgorithm);
-		fileChooser = new JFileChooser();
+		
 		//Notes: weight x and y determine how the panels
 		
 		BasePanel.setLayout(BasePanelLayout);
-		BasePanel.setBackground(Color.BLACK); //colors just for contrast, they should be changed soon
+		BasePanel.setBackground(Color.GRAY); //colors just for contrast, they should be changed soon
 	
 		baseConstraints.weightx = 0.5; //determines left/right pull when frame is resized
 		baseConstraints.weighty = 0.5; //determines horizontal/verticla pull when frame is resized
@@ -76,7 +72,7 @@ public class GUI {
 		baseConstraints.gridx = 0; //grid x is 0 out of 3, far left
 		baseConstraints.gridy = 0; //grid y set to 0 to position at top
 		
-		baseConstraints.insets = new Insets(5, 5, 5, 5); //insets used for all panels so there's room between them
+		baseConstraints.insets = new Insets(0, 1, 0, 1); //insets used for all panels so there's room between them
 		
 		baseConstraints.gridheight = 1; //a height of 1 out of three cells
 		baseConstraints.gridwidth = 3; //a width of all 3 cells
@@ -86,7 +82,8 @@ public class GUI {
 		//Panel class constructor adds panel to BasePanel, BasePanelLayout, etc. when instantiated
 		
 		Panel userInputPanel = new Panel();
-		userInputPanel.setBackground(Color.YELLOW);
+		Color bgColor = new Color(173, 216, 230);
+		userInputPanel.setBackground(bgColor);
 		
 		JLabel inputLabel = new JLabel();
 		inputLabel.setText("INSERT ARRAY SIZE:");
@@ -116,6 +113,8 @@ public class GUI {
 
 		//creates new panel and adds a new Histogram object with the most recent sort information
 		Panel histogramPanel = new Panel();
+		Color histColor = new Color(240, 240, 240);
+		histogramPanel.setBackground(histColor);
 		int last = sortTracker.size() - 1;
 		Histogram nDisplay = new Histogram(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
 				sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), 0);
@@ -132,7 +131,7 @@ public class GUI {
 		
 		setPanelDimensions(0.0, 0.0);
 		Panel savePanel = new Panel();
-		savePanel.setBackground(Color.RED);
+		savePanel.setBackground(bgColor);
 		
 		//save button w/action listener
 		JButton saveArrays = new JButton("Save");
@@ -140,11 +139,21 @@ public class GUI {
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e)
 		        	{
-						try {
-							saveFile();
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						int returnVal = fileChooser.showSaveDialog(BasePanel);
+						if (returnVal == JFileChooser.APPROVE_OPTION)
+						{
+							File saveFile = fileChooser.getSelectedFile();
+							try{
+								FileOutputStream writeData = new FileOutputStream(saveFile + ".txt");
+								ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
+								
+								writeStream.writeObject(sortTracker);
+								writeStream.flush();
+							    writeStream.close();
+								}catch (IOException e1) {
+								    e1.printStackTrace();
+								}
+							
 						}
 		        	}
 				}
@@ -152,11 +161,44 @@ public class GUI {
 		
 		//FINISH
 		JButton loadArrays = new JButton("Load");
-		saveArrays.addActionListener(
+		loadArrays.addActionListener(
 				new ActionListener() {
+					@SuppressWarnings("unchecked")
 					public void actionPerformed(ActionEvent e)
 		        	{
-						
+						int returnVal = fileChooser.showOpenDialog(BasePanel);
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File loadFile = fileChooser.getSelectedFile();
+							ArrayList<SortAlgorithms> loadTracker = new ArrayList<SortAlgorithms>();
+							try{
+							    FileInputStream readData = new FileInputStream(loadFile);
+							    ObjectInputStream readStream = new ObjectInputStream(readData);
+
+							    loadTracker = (ArrayList<SortAlgorithms>) readStream.readObject();
+							    readStream.close();
+							}catch (Exception e1) {
+							    e1.printStackTrace();
+							}
+							//the values in the arraylist have to be re-initialized on a load. please don't ask me why. i don't know. 
+							//HOWEVER, IT WORKS, and this is what matters, so i'm just looping through the saved ns to re-initialize the whole thing
+							int last = loadTracker.size() -1;
+							
+							for (int i = 1; i <= last; ++i) {
+								loadTracker.get(i).setN();
+								System.out.println(loadTracker.get(i).getN());
+							}
+							
+							for (int i = 1; i <= last; ++i) {
+								int tempN = loadTracker.get(i).getN();
+								SortAlgorithms tempSort = new SortAlgorithms(tempN);
+								loadTracker.set(i, tempSort);
+							}
+							nDisplay.setN(loadTracker.get(last).getN());
+							nDisplay.resetSorts(loadTracker.get(last).getMergeOps(), loadTracker.get(last).getBubbleOps(), 
+							loadTracker.get(last).getQuickOps(), loadTracker.get(last).getSelecOps(), loadTracker.get(last).getN());
+							histogramPanel.validate();
+							histogramPanel.repaint();
+						}
 		        	}
 				}
 		);
@@ -246,21 +288,6 @@ public class GUI {
 		int pixelHeight = (int) (frameHeight * heightFramePortion);
 		baseConstraints.ipady = pixelHeight / 2;
 	}
-	
-//writes everything to a file so you can look at it later
-	public void saveFile() throws FileNotFoundException
-	{
-		// File writing objects
-		PrintWriter outputFile = new PrintWriter ("SortFile.txt");
-		
-		for (int i = 0; i < sortTracker.size(); ++i) {
-			outputFile.println(sortTracker.get(i).sortArray);
-			outputFile.println(sortTracker.get(i).getMergeOps());
-			outputFile.println(sortTracker.get(i).getBubbleOps());
-			outputFile.println(sortTracker.get(i).getQuickOps());
-		}
-		
-		outputFile.close();
-	}
+
 
 }

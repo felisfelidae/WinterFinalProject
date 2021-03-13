@@ -1,6 +1,12 @@
 package finalprojectwinter;
 
-public class BubbleSort {
+import java.io.Serializable;
+
+public class BubbleSort implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//EMMA
 	
 	public int operationsCount = 0;

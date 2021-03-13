@@ -1,8 +1,17 @@
 package finalprojectwinter;
 
-public class MergeSort {
+import java.io.Serializable;
+
+public class MergeSort implements Serializable{
 	//AMM 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
 	private static int countOperations = 0;
 	
 	/*recursive method which splits the array in half until it has only single unit sized fractions, and then calls mergeSort to zip those units

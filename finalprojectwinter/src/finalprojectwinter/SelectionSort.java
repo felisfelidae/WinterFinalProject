@@ -1,8 +1,14 @@
 package finalprojectwinter;
 
-public class SelectionSort {
+import java.io.Serializable;
+
+public class SelectionSort implements Serializable{
 	//EOL 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int operationsCount = 0;
 	
 	public void selectron2000(int [] numbers) {

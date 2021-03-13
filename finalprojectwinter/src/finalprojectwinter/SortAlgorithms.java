@@ -1,16 +1,22 @@
   
 package finalprojectwinter;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class SortAlgorithms {
+public class SortAlgorithms implements Serializable{
 	//AMM 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected int[] sortArray;
 	private static int mergeOps = 1;
 	private static int bubbleOps = 1;
 	private static int quickOps = 1;
 	private static int selecOps = 1;
+	private static int N = 1;
 	Random randomNum = new Random();
 	MergeSort mergeSort = new MergeSort();
 	BubbleSort bubbleSort = new BubbleSort();
@@ -26,6 +32,7 @@ public class SortAlgorithms {
 	SortAlgorithms(int length) {
 		createSortArray(length);
 		fillSortArray(length);
+		setN();
 		mergeSort.mergeParse(0, (length -1), sortArray);
 		setMergeOps();
 		bubbleSort.bubbleSort(sortArray);
@@ -76,6 +83,14 @@ public class SortAlgorithms {
 	
 	public int getSelecOps() {
 		return selecOps;
+	}
+	
+	public void setN() {
+		N = sortArray.length;
+	}
+	
+	public int getN() {
+		return N;
 	}
 
 

@@ -101,7 +101,7 @@ public class GUI {
 		
 		setPanelDimensions(0.5, 1.0);
 		LineGraph lineGraphPanel = new LineGraph();
-		lineGraphPanel.setBackground(Color.BLUE);
+		lineGraphPanel.setBackground(new Color(255, 194, 82));
 	
 		
 		baseConstraints.gridx = 1;

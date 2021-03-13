@@ -33,7 +33,7 @@ public class LineGraph extends Panel{
 	double scaleXAxis;
 	double scaleYAxis;
 	
-	//fields for plotting big o graphs
+	//fields for plotting big o  graphs 
 	
 	//this should be changed not sure if we're doing 1k or 10k
 	int tempMaxArrayInputSize = 100;

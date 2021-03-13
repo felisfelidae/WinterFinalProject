@@ -159,8 +159,7 @@ public class GUI {
 				}
 		);
 		
-		/*load functionality. choose a file of .txt or .ser form (possibly others but this program saves txts so what can ya do) in a very ugly
-		 * file chooser and loads it in. it doesn't like reading "object" into an "arraylist<sortalgorithms> but it has all the data*/
+		//FINISH
 		JButton loadArrays = new JButton("Load");
 		loadArrays.addActionListener(
 				new ActionListener() {
@@ -186,6 +185,7 @@ public class GUI {
 							
 							for (int i = 1; i <= last; ++i) {
 								loadTracker.get(i).setN();
+								System.out.println(loadTracker.get(i).getN());
 							}
 							
 							for (int i = 1; i <= last; ++i) {

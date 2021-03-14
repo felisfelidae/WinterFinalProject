@@ -144,7 +144,14 @@ public class GUI {
 						{
 							File saveFile = fileChooser.getSelectedFile();
 							try{
-								FileOutputStream writeData = new FileOutputStream(saveFile + ".txt");
+								String fileName = saveFile.getName();
+								FileOutputStream writeData;
+								if (fileName.charAt(fileName.length()-4) == '.') {
+									writeData = new FileOutputStream(saveFile);
+								}
+								else {
+									writeData = new FileOutputStream(saveFile + ".txt");
+								}
 								ObjectOutputStream writeStream = new ObjectOutputStream(writeData);
 								
 								writeStream.writeObject(sortTracker);
@@ -213,17 +220,24 @@ public class GUI {
 		        	{
 						userInputString = userInput.getText();
 						userInput.setText(null);
+						try {
 						userInputResult = Integer.parseInt(userInputString);
+						}
+						catch(NumberFormatException e2) {
+							   // Here catch NumberFormatException
+							   // So input is not a int.
+						} 
 						if (userInputResult > 10000) {
 							feedBack.setText("How much processing power do you think we have around here?");
 						}
 						else if (userInputResult < 1) {
-							feedBack.setText("Hey! What kind of array do you think that is!?");
+							feedBack.setText("Hey! What kind of array do you think that is!? Pick a positive integer!");
 						}
 						else {
 							feedBack.setText(null);
 							SortAlgorithms newSort = new SortAlgorithms(userInputResult);
 							sortTracker.add(newSort);
+							nDisplay.setN(userInputResult);
 							nDisplay.resetSorts(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
 					sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), userInputResult);
 							histogramPanel.validate();

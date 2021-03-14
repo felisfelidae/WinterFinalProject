@@ -160,6 +160,13 @@ public class LineGraph extends Panel{
 					g2d.fillOval(xCoord, bubbleY, 5, 5);
 					System.out.println(xCoord + ", " + bubbleY);
 		}	
+		/*checking to see of circle works
+		for(int i = 0; i < 10; i++) {
+			
+			g2d.setColor(Color.BLACK);
+			g2d.fillOval(5*i + 100, 5*i + 100, 5, 5);
+		}
+		*/
 	}
 	//method to square n for graphing Big O
 	private int square(int number) {	

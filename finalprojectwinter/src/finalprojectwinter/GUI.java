@@ -27,7 +27,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class GUI {
-	//teamwork makes the dreamwork
+	//team work makes the dream work
 	ArrayList<SortAlgorithms> sortTracker = new ArrayList<SortAlgorithms>();
 	
 	//this might not work as a static variable

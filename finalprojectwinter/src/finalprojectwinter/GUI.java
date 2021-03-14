@@ -29,6 +29,10 @@ import javax.swing.JTextField;
 public class GUI {
 	//teamwork makes the dreamwork
 	ArrayList<SortAlgorithms> sortTracker = new ArrayList<SortAlgorithms>();
+	
+	//this might not work as a static variable
+	public static ArrayList<SortAlgorithms> loadTracker = new ArrayList<SortAlgorithms>();
+	
 	private SortAlgorithms dummyAlgorithm = new SortAlgorithms();
 	private JTextField userInput = new JTextField(10);
 	private String userInputString;
@@ -169,12 +173,13 @@ public class GUI {
 						int returnVal = fileChooser.showOpenDialog(BasePanel);
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
 							File loadFile = fileChooser.getSelectedFile();
-							ArrayList<SortAlgorithms> loadTracker = new ArrayList<SortAlgorithms>();
+	
 							try{
 							    FileInputStream readData = new FileInputStream(loadFile);
 							    ObjectInputStream readStream = new ObjectInputStream(readData);
 
 							    loadTracker = (ArrayList<SortAlgorithms>) readStream.readObject();
+							    
 							    readStream.close();
 							}catch (Exception e1) {
 							    e1.printStackTrace();
@@ -198,7 +203,11 @@ public class GUI {
 							loadTracker.get(last).getQuickOps(), loadTracker.get(last).getSelecOps(), loadTracker.get(last).getN());
 							histogramPanel.validate();
 							histogramPanel.repaint();
-						}
+							
+							lineGraphPanel.plotPreviousResults();
+							lineGraphPanel.validate();
+							lineGraphPanel.repaint();
+							}
 		        	}
 				}
 		);
@@ -263,10 +272,6 @@ public class GUI {
 		frame.setVisible(true);
 		
 		
-		//this lined used for texting sortTracker
-		for (int i = 0; i < sortTracker.size(); i++) {
-		System.out.println(sortTracker.get(i).getBubbleOps());
-		}
 		
 
 		
@@ -283,6 +288,10 @@ public class GUI {
 		
 		return panel.getWidth();
 	
+	}
+	
+	public static ArrayList<SortAlgorithms> returnLoadTracker() {
+		return loadTracker;
 	}
 	
 	

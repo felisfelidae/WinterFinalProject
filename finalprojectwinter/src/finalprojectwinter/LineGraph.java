@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 
 public class LineGraph extends Panel{
 	
+	private Graphics2D g2d;
 	//panel dimensions, required for relocating coordinates
 	int panelHeight;
 	int panelWidth;
@@ -63,8 +64,10 @@ public class LineGraph extends Panel{
 	Color quickSortPointColor = background;
 	Color selectionSortPointColor = background;
 	Color bubbleSortPointColor = background;
+
+	private float alpha = 0.0f ;
+	private float alphaForPreviousResults = 0.0f ;
 	
-	private float alpha = 0.7f ;
 			
 
 	public LineGraph() {
@@ -76,7 +79,7 @@ public class LineGraph extends Panel{
 	
 	public void paintComponent(Graphics g) {
 		
-		Graphics2D g2d = (Graphics2D) g;
+		g2d = (Graphics2D) g;
 		
 		//this was supposed to be to smooth out the lines, but I couldn't get it working
 		super.paintComponent(g2d);
@@ -85,8 +88,11 @@ public class LineGraph extends Panel{
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 	    g2d.setRenderingHints(rh);
 	    
-	    AlphaComposite transparent = AlphaComposite.getInstance(
+	    AlphaComposite opacity = AlphaComposite.getInstance(
 	            AlphaComposite.SRC_OVER, alpha);
+	    
+	    AlphaComposite opacityAfterLoad = AlphaComposite.getInstance(
+	            AlphaComposite.SRC_OVER, alphaForPreviousResults);
 	    
 		
 		panelHeight = GUI.getPanelHeight(this);
@@ -105,8 +111,8 @@ public class LineGraph extends Panel{
 		
 		
 		//setting elements on graph as transparent
-		g2d.setComposite(transparent);
-		
+		g2d.setComposite(opacity);
+
 		g2d.setStroke(new BasicStroke(3));
 
 		g2d.setColor(bigOnSquaredColor);
@@ -131,7 +137,29 @@ public class LineGraph extends Panel{
 		g2d.setColor(bubbleSortPointColor);
 		g2d.fillOval(inputArraySize, bubbleSortResult, plotPointDiameter, plotPointDiameter);
 	
+		g2d.setComposite(opacityAfterLoad);
 		
+		for(int i = 0; i < GUI.returnLoadTracker().size(); i++) {
+					
+					g2d.setColor(Color.BLACK);
+					int xCoord = adjustXForGraphing(GUI.returnLoadTracker().get(i).getN());
+					
+					int mergeY = adjustYForGraphing(GUI.returnLoadTracker().get(i).getMergeOps());
+					g2d.fillOval(xCoord, mergeY, 5, 5);
+					System.out.println(xCoord + ", " + mergeY);
+					
+					int selectY = adjustYForGraphing(GUI.returnLoadTracker().get(i).getSelecOps());
+					g2d.fillOval(xCoord, selectY, 5, 5);
+					System.out.println(xCoord + ", " + selectY);
+					
+					int quickY = adjustYForGraphing(GUI.returnLoadTracker().get(i).getQuickOps());
+					g2d.fillOval(xCoord, quickY, 5, 5);
+					System.out.println(xCoord + ", " + quickY);
+					
+					int bubbleY = adjustYForGraphing(GUI.returnLoadTracker().get(i).getBubbleOps());
+					g2d.fillOval(xCoord, bubbleY, 5, 5);
+					System.out.println(xCoord + ", " + bubbleY);
+		}	
 	}
 	//method to square n for graphing Big O
 	private int square(int number) {	
@@ -218,6 +246,14 @@ public class LineGraph extends Panel{
 		bigOnLognColor = Color.GRAY;
 		bigOnSquaredColor = Color.GRAY;
 		
+		alpha = 0.7f;
+		
+	}
+	
+	public void plotPreviousResults() {
+		alphaForPreviousResults = 0.7f;
+			
+		}
+		
 	}
 
-}

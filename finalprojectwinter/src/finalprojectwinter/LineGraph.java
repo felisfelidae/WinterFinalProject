@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -37,7 +38,7 @@ public class LineGraph extends Panel{
 	
 	//this should be changed not sure if we're doing 1k or 10k
 	int tempMaxArrayInputSize = 100;
-	int plotPointFrequency = (int) (tempMaxArrayInputSize * 0.1);
+	int plotPointFrequency = tempMaxArrayInputSize;
 	int coordinatesArraySize;
 	
 	int[] nSquaredXCoordinates;
@@ -45,6 +46,26 @@ public class LineGraph extends Panel{
 	
 	int[] nLognXCoordinates;
 	int[] nLognYCoordinates;
+	
+	int inputArraySize = 300;
+	
+	int mergeSortResult = 300;
+	int quickSortResult = 300;
+	int selectionSortResult = 300;
+	int bubbleSortResult = 300;
+	
+	Color background = (Color.WHITE);
+	
+	Color bigOnSquaredColor = background;
+	Color bigOnLognColor = background;
+	
+	Color mergeSortPointColor = background;
+	Color quickSortPointColor = background;
+	Color selectionSortPointColor = background;
+	Color bubbleSortPointColor = background;
+	
+	private float alpha = 0.7f ;
+			
 
 	public LineGraph() {
 		JLabel titleLabel = new JLabel();
@@ -60,9 +81,13 @@ public class LineGraph extends Panel{
 		//this was supposed to be to smooth out the lines, but I couldn't get it working
 		super.paintComponent(g2d);
 		RenderingHints rh = new RenderingHints(
-	             RenderingHints.KEY_TEXT_ANTIALIASING,
-	             RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+				RenderingHints.KEY_ANTIALIASING,
+			    RenderingHints.VALUE_ANTIALIAS_ON);
 	    g2d.setRenderingHints(rh);
+	    
+	    AlphaComposite transparent = AlphaComposite.getInstance(
+	            AlphaComposite.SRC_OVER, alpha);
+	    
 		
 		panelHeight = GUI.getPanelHeight(this);
 		panelWidth = GUI.getPanelWidth(this);
@@ -75,17 +100,37 @@ public class LineGraph extends Panel{
 		scaleXAxis = graphRectSideAsDouble/tempMaxArrayInputSize;
 		scaleYAxis = graphRectSideAsDouble/square(tempMaxArrayInputSize);
 		
-		g2d.setColor(new Color(255, 234, 186));
+		g2d.setColor(background);
 		g2d.fillRect(graphRectXCoord, graphRectYCoord, graphRectSide, graphRectSide);
 		
-		g2d.setColor(new Color(92, 201, 154));
-		g2d.setStroke(new BasicStroke(2));
 		
+		//setting elements on graph as transparent
+		g2d.setComposite(transparent);
+		
+		g2d.setStroke(new BasicStroke(3));
+
+		g2d.setColor(bigOnSquaredColor);
 		create_BigO_of_nSquared_Coordinates(tempMaxArrayInputSize);
 		g2d.drawPolyline(nSquaredXCoordinates, nSquaredYCoordinates, coordinatesArraySize);
 		
+		g2d.setColor(bigOnLognColor);
 		create_BigO_of_nLogn_Coordinates(tempMaxArrayInputSize);
 		g2d.drawPolyline(nLognXCoordinates, nLognYCoordinates, coordinatesArraySize);
+		
+		int plotPointDiameter = 15;
+		
+		g2d.setColor(mergeSortPointColor);
+		g2d.fillOval(inputArraySize, mergeSortResult, plotPointDiameter, plotPointDiameter);
+		
+		g2d.setColor(quickSortPointColor);
+		g2d.fillOval(inputArraySize, quickSortResult, plotPointDiameter, plotPointDiameter);
+		
+		g2d.setColor(quickSortPointColor);
+		g2d.fillOval(inputArraySize, selectionSortResult, plotPointDiameter, plotPointDiameter);
+		
+		g2d.setColor(bubbleSortPointColor);
+		g2d.fillOval(inputArraySize, bubbleSortResult, plotPointDiameter, plotPointDiameter);
+	
 		
 	}
 	//method to square n for graphing Big O
@@ -98,13 +143,13 @@ public class LineGraph extends Panel{
 	//creates an arrays for x and y coordinates to graph big o of n squared polyline
 	private void create_BigO_of_nSquared_Coordinates(int maximumInputArraySize) {
 		
-		coordinatesArraySize = (int)maximumInputArraySize/plotPointFrequency;
+		coordinatesArraySize = maximumInputArraySize;
 		
 		nSquaredXCoordinates = new int[coordinatesArraySize];
 		nSquaredYCoordinates = new int[coordinatesArraySize];
 		
 		for(int i = 0; i < coordinatesArraySize; i++) {
-			nSquaredXCoordinates[i] = plotPointFrequency * i;
+			nSquaredXCoordinates[i] = i;
 			nSquaredYCoordinates[i] = square(nSquaredXCoordinates[i]);
 			
 			//scale each coordinate
@@ -120,20 +165,20 @@ public class LineGraph extends Panel{
 	//creates an arrays for x and y coordinates to graph big o of n log n polyline
 	private void create_BigO_of_nLogn_Coordinates(int maximumInputArraySize) {
 		
-		coordinatesArraySize = (int) (maximumInputArraySize/plotPointFrequency);
+		coordinatesArraySize = maximumInputArraySize;
 		
 		nLognXCoordinates = new int[coordinatesArraySize];
 		nLognYCoordinates = new int[coordinatesArraySize];
 		
 		for(int i = 0; i < coordinatesArraySize; i++) {
-			nLognXCoordinates[i] = plotPointFrequency * i;
+			nLognXCoordinates[i] = i;
 			
 			//one issue might be where the double and ints are cast
 			//tried this with math.log and math.log10
 			nLognYCoordinates[i] = (int) (nSquaredXCoordinates[i] * Math.log10((double) (nSquaredXCoordinates[i]) ) );
 			
 			//for testing
-			System.out.println(nLognXCoordinates[i] + ", " + nLognYCoordinates[i]);
+			//System.out.println(nLognXCoordinates[i] + ", " + nLognYCoordinates[i]);
 			
 			nLognXCoordinates[i] = adjustXForGraphing(nLognXCoordinates[i]);
 			nLognYCoordinates[i] = adjustYForGraphing(nLognYCoordinates[i]);
@@ -156,6 +201,23 @@ public class LineGraph extends Panel{
 		int yCoordinate = yOriginPoint - (int) (yValue * scaleYAxis);
 		
 		return yCoordinate;
+	}
+	
+	public void plotResults(int userResultArraySize, int mergeSortResults, int quickSortResults, int selectionSortResults, int bubbleSortResults) {
+		inputArraySize = adjustXForGraphing(userResultArraySize);
+		mergeSortResult = adjustYForGraphing(mergeSortResults);
+		quickSortResult = adjustYForGraphing(quickSortResults);
+		selectionSortResult = adjustYForGraphing(selectionSortResults);
+		bubbleSortResult = adjustYForGraphing(selectionSortResults);
+		
+		mergeSortPointColor = Histogram.mergeColor;
+		quickSortPointColor = Histogram.quickColor;
+		selectionSortPointColor = Histogram.selecColor;
+		bubbleSortPointColor = Histogram.bubbleColor;
+		
+		bigOnLognColor = Color.GRAY;
+		bigOnSquaredColor = Color.GRAY;
+		
 	}
 
 }

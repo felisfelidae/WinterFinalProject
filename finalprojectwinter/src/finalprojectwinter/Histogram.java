@@ -15,6 +15,12 @@ public class Histogram extends JPanel {
 	private int mergeOps, bubbleOps, quickOps, selecOps, N;
 	private String scale = "0";
 	
+	//making colors public and static so they can be the same as line graphs plot points
+	public static Color bubbleColor = new Color(255, 105, 180);
+	public static Color mergeColor = new Color(0, 200, 200);
+	public static Color quickColor = new Color(159, 226, 191);
+	public static Color selecColor = new Color(190, 178, 225);
+	
 	public Histogram(int mergeOps, int bubbleOps, int quickOps, int selecOps, int N) {
 		JLabel histLabel1;
 		this.N = N;
@@ -125,28 +131,25 @@ public class Histogram extends JPanel {
 	       * a lot. Everything is grouped by what color it fills.*/
 	      Rectangle bubbleSort = new Rectangle(10, 80, bubbleOps, 25);
 	      Rectangle babyBubble = new Rectangle(105, 35, 10, 10);
-	      Color bubbleColor = new Color(255, 105, 180);
 	      graphicsObj.setColor(bubbleColor);
 	      graphicsObj.fill(bubbleSort);
 	      graphicsObj.fill(babyBubble);
 	      
+	      
 	      Rectangle mergeSort = new Rectangle(10, 110, mergeOps, 25); 
 	      Rectangle babyMerge = new Rectangle(105, 50, 10, 10);
-	      Color mergeColor = new Color(0, 200, 200);
 	      graphicsObj.setColor(mergeColor);
 	      graphicsObj.fill(mergeSort);
 	      graphicsObj.fill(babyMerge);
 	      
 	      Rectangle quickSort = new Rectangle(10, 140, quickOps, 25);
 	      Rectangle babyQuick = new Rectangle(205, 35, 10, 10);
-	      Color quickColor = new Color(159, 226, 191);
 	      graphicsObj.setColor(quickColor);
 	      graphicsObj.fill(quickSort);
 	      graphicsObj.fill(babyQuick);
 	      
 	      Rectangle selecSort = new Rectangle(10, 170, selecOps, 25);
 	      Rectangle babySelec = new Rectangle(205, 50, 10, 10);
-	      Color selecColor = new Color(190, 178, 225);
 	      graphicsObj.setColor(selecColor);
 	      graphicsObj.fill(selecSort);
 	      graphicsObj.fill(babySelec);

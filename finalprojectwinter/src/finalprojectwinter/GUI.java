@@ -46,8 +46,8 @@ public class GUI {
 	
 	
 	//We can change frame's Width and Height here
-	public static int frameWidth = 600;
-	public static int frameHeight = 500;
+	public static int frameWidth = 1200;
+	public static int frameHeight = 800;
 	
 	public static Dimension frameSize = new Dimension(frameWidth, frameHeight);
 	
@@ -242,6 +242,10 @@ public class GUI {
 					sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), userInputResult);
 							histogramPanel.validate();
 							histogramPanel.repaint();
+							
+							lineGraphPanel.plotResults(userInputResult, sortTracker.get(last).getMergeOps(), sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), sortTracker.get(last).getBubbleOps());
+							lineGraphPanel.validate();
+							lineGraphPanel.repaint();
 						}
 		        	}
 				}
@@ -271,6 +275,12 @@ public class GUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		
+		
+		//this lined used for texting sortTracker
+		for (int i = 0; i < sortTracker.size(); i++) {
+		System.out.println(sortTracker.get(i).getBubbleOps());
+		}
 		
 
 		

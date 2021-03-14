@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -53,7 +54,7 @@ public class LineGraph extends Panel{
 	int selectionSortResult = 300;
 	int bubbleSortResult = 300;
 	
-	Color background = (new Color(255, 234, 186));
+	Color background = (Color.WHITE);
 	
 	Color bigOnSquaredColor = background;
 	Color bigOnLognColor = background;
@@ -62,6 +63,8 @@ public class LineGraph extends Panel{
 	Color quickSortPointColor = background;
 	Color selectionSortPointColor = background;
 	Color bubbleSortPointColor = background;
+	
+	private float alpha = 0.7f ;
 			
 
 	public LineGraph() {
@@ -81,6 +84,10 @@ public class LineGraph extends Panel{
 				RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
 	    g2d.setRenderingHints(rh);
+	    
+	    AlphaComposite transparent = AlphaComposite.getInstance(
+	            AlphaComposite.SRC_OVER, alpha);
+	    
 		
 		panelHeight = GUI.getPanelHeight(this);
 		panelWidth = GUI.getPanelWidth(this);
@@ -93,8 +100,12 @@ public class LineGraph extends Panel{
 		scaleXAxis = graphRectSideAsDouble/tempMaxArrayInputSize;
 		scaleYAxis = graphRectSideAsDouble/square(tempMaxArrayInputSize);
 		
-		g2d.setColor(new Color(255, 234, 186));
+		g2d.setColor(background);
 		g2d.fillRect(graphRectXCoord, graphRectYCoord, graphRectSide, graphRectSide);
+		
+		
+		//setting elements on graph as transparent
+		g2d.setComposite(transparent);
 		
 		g2d.setStroke(new BasicStroke(3));
 
@@ -204,7 +215,7 @@ public class LineGraph extends Panel{
 		selectionSortPointColor = Histogram.selecColor;
 		bubbleSortPointColor = Histogram.bubbleColor;
 		
-		bigOnLognColor = Color.WHITE;
+		bigOnLognColor = Color.GRAY;
 		bigOnSquaredColor = Color.GRAY;
 		
 	}

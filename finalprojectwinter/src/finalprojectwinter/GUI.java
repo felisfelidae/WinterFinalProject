@@ -27,16 +27,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class GUI {
+	//testing commit
 	//team work makes the dream work
 	ArrayList<SortAlgorithms> sortTracker = new ArrayList<SortAlgorithms>();
 	
 	//this might not work as a static variable
 	public static ArrayList<SortAlgorithms> loadTracker = new ArrayList<SortAlgorithms>();
 	
-	private SortAlgorithms dummyAlgorithm = new SortAlgorithms();
+	private SortAlgorithms dummyAlgorithm = new SortAlgorithms(1);
 	private JTextField userInput = new JTextField(10);
 	private String userInputString;
-	private int userInputResult;
+	public static int userInputResult;
 	final private JFileChooser fileChooser = new JFileChooser();
 
 	//The title is a work in progress
@@ -197,14 +198,10 @@ public class GUI {
 							
 							for (int i = 1; i <= last; ++i) {
 								loadTracker.get(i).setN();
-								System.out.println(loadTracker.get(i).getN());
+								int tempN = loadTracker.get(i).getN();
+								nonLoopingLoad(i, tempN);
 							}
 							
-							for (int i = 1; i <= last; ++i) {
-								int tempN = loadTracker.get(i).getN();
-								SortAlgorithms tempSort = new SortAlgorithms(tempN);
-								loadTracker.set(i, tempSort);
-							}
 							nDisplay.setN(loadTracker.get(last).getN());
 							nDisplay.resetSorts(loadTracker.get(last).getMergeOps(), loadTracker.get(last).getBubbleOps(), 
 							loadTracker.get(last).getQuickOps(), loadTracker.get(last).getSelecOps(), loadTracker.get(last).getN());
@@ -246,13 +243,15 @@ public class GUI {
 							feedBack.setText(null);
 							SortAlgorithms newSort = new SortAlgorithms(userInputResult);
 							sortTracker.add(newSort);
+							int last = sortTracker.size() -1;
 							nDisplay.setN(userInputResult);
 							nDisplay.resetSorts(sortTracker.get(last).getMergeOps(), sortTracker.get(last).getBubbleOps(), 
 					sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), userInputResult);
 							histogramPanel.validate();
 							histogramPanel.repaint();
 							
-							lineGraphPanel.plotResults(userInputResult, sortTracker.get(last).getMergeOps(), sortTracker.get(last).getQuickOps(), sortTracker.get(last).getSelecOps(), sortTracker.get(last).getBubbleOps());
+							
+							lineGraphPanel.plotResults(sortTracker);
 							lineGraphPanel.validate();
 							lineGraphPanel.repaint();
 						}
@@ -320,6 +319,11 @@ public class GUI {
 		
 		int pixelHeight = (int) (frameHeight * heightFramePortion);
 		baseConstraints.ipady = pixelHeight / 2;
+	}
+	
+	public void nonLoopingLoad(int pos, int tempN) {
+		SortAlgorithms tempSort = new SortAlgorithms(tempN);
+		loadTracker.set(pos, tempSort);
 	}
 
 

@@ -6,17 +6,14 @@ import java.util.Random;
 
 public class SortAlgorithms implements Serializable{
 	//AMM 
-	
-	/**
-	 * 
-	 */
+	//testing commit
 	private static final long serialVersionUID = 1L;
 	protected int[] sortArray;
-	private static int mergeOps = 1;
-	private static int bubbleOps = 1;
-	private static int quickOps = 1;
-	private static int selecOps = 1;
-	private static int N = 1;
+	private int mergeOps;
+	private int bubbleOps;
+	private int quickOps;
+	private int selecOps;
+	private int N;
 	Random randomNum = new Random();
 	MergeSort mergeSort = new MergeSort();
 	BubbleSort bubbleSort = new BubbleSort();
@@ -92,6 +89,4 @@ public class SortAlgorithms implements Serializable{
 	public int getN() {
 		return N;
 	}
-
-
 }
